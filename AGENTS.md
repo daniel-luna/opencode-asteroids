@@ -52,13 +52,25 @@ Four tracked files, nothing else: `index.html`, `game.js`, `favicon.svg`, `READM
   invincibility. Clearing a level is just `asteroids.length === 0` (`game.js:350`), which
   calls `nextLevel()` → same reset + `3 + level` fresh size-3 asteroids. Lives carry over;
   level 1 spawns 4.
+- **The shield shares the `invincible` field.** `Ship.absorb()` spends a charge *and* sets
+  `invincible = SHIELD_GRACE`, so raising the grace also lengthens the respawn-style
+  blink, and the ship is briefly unkillable after every absorbed hit. That grace is the only
+  thing stopping a sustained overlap from draining all charges in consecutive frames — don't
+  replace it with a separate timer without re-checking that. It also means the shield
+  protects against *any* future damage source, so wire new ones through `absorb()`.
+- **`PowerUp` is keyed by `kind`** (`'speed' | 'shield'`), chosen at drop time by
+  `PU_SHIELD_CHANCE`; the draw color and glyph are the only per-kind branches. A shield
+  pickup taken at `SHIELD_MAX` charges is silently wasted (`Math.min` in `update()`).
+  `SHIELD_MAX` is read in four places: `reset()`, the charge marks, the pickup cap and the
+  HUD — bump all of them together. Dying zeroes the shield along with `boost` (`reset()`)
+  and clears the power-ups in flight (`killShip()`).
 
 ## Known deviations from the README
 
-- The README advertises "power-ups especiales" and a shooting-star asteroid ("estrella
-  fugaz"). **Neither exists in `game.js`** — no such classes, constants, or branches. The
-  README also omits the `NIVEL`/lives HUD that ships. Trust the code.
 - The README's scoring table is accurate and matches `POINTS`.
+- The README's *Características* list is shorter than the code: the shooting-star asteroid
+  ("estrella fugaz") and both power-ups ship, and the README omits the `NIVEL`/lives HUD.
+  Trust the code.
 
 ## Conventions
 
