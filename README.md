@@ -29,6 +29,7 @@ Luego visita `http://localhost:3000`.
 | `←` `→`   | Rotar nave |
 | `↑`       | Propulsar  |
 | `Espacio` | Disparar   |
+| `S`       | Cambiar skin de la nave |
 
 ## Puntuación
 
@@ -47,3 +48,4 @@ Luego visita `http://localhost:3000`.
   - **Velocidad**: duplica la propulsión durante 5 segundos
   - **Triple disparo**: durante 5 segundos cada disparo suelta 3 haces paralelos en línea recta
   - **Escudo**: suma una carga (máx. 3). Cada impacto absorbido resta una carga y otorga 1 segundo de invencibilidad, así que un choque largo no vacía el escudo de golpe
+- 5 skins de nave (casco, color y llama distintos) seleccionables con `S`; la elección se recuerda al recargar la página
